@@ -19,9 +19,9 @@ class GetWeather {
 
         var url = 'https://weather-ydn-yql.media.yahoo.com/forecastrss';
         var method = 'GET';
-        var app_id = 'VJoMsa4i';
-        var consumer_key = 'dj0yJmk9YWdpYU05QmtzcVpRJmQ9WVdrOVZrcHZUWE5oTkdrbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE1';
-        var consumer_secret = 'ab55495f3f199d993292cc30fcd2dd0759213298';
+        var app_id = 'YN08AI4q';
+        var consumer_key = 'dj0yJmk9UVNyQTFFN2RLM2g5JmQ9WVdrOVdVNHdPRUZKTkhFbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWEy';
+        var consumer_secret = '2836e4cdac5cfa27a51a1a16ee4f4be048674b85';
         var concat = '&';
         var query = { 'location': city, 'format': 'json' };
         var oauth = {
