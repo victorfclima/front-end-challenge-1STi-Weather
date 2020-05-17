@@ -1,14 +1,23 @@
 class GetWeather {
 
     constructor() {
-        this.inputCity = document.querySelector('#input-city').value
+        this.inputCity = document.querySelector('#input-city')
+        this.searchBtn = document.querySelector('#glass')
 
         this.selectCity()
-        this.getApi()
     }
 
     selectCity() {
-        this.getApi(this.inputCity)
+        this.searchBtn.addEventListener('click', e => {
+            this.getApi(this.inputCity.value)
+        })
+
+        this.inputCity.addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                this.getApi(this.inputCity)
+            }
+        })
+
     }
 
     getApi(city) {
@@ -23,7 +32,7 @@ class GetWeather {
         var consumer_key = 'dj0yJmk9UVNyQTFFN2RLM2g5JmQ9WVdrOVdVNHdPRUZKTkhFbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWEy';
         var consumer_secret = '2836e4cdac5cfa27a51a1a16ee4f4be048674b85';
         var concat = '&';
-        var query = { 'location': city, 'format': 'json' };
+        var query = { 'location': `'${city}'`, 'format': 'json' };
         var oauth = {
             'oauth_consumer_key': consumer_key,
             'oauth_nonce': Math.random().toString(36).substring(2),
