@@ -122,8 +122,6 @@ class GetWeather {
 
     showDetail(data) {
 
-        console.log(data)
-
         let parentDiv = document.querySelector('#topdiv')
 
         if (document.querySelectorAll('#detail').length >= 1) {
