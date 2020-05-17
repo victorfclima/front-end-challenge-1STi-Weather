@@ -7,6 +7,21 @@ class GetWeather {
 
         this.focus()
         this.selectCity()
+        this.initialize()
+    }
+
+    initialize() {
+
+        this.getApi('Belo Horizonte')
+        this.getApi('Brasília')
+        this.getApi('Cuiabá')
+        this.getApi('Curitiba')
+        this.getApi('Florianópolis')
+        this.getApi('Fortaleza')
+        this.getApi('Goiânia')
+        this.getApi('Natal')
+        this.getApi('Rio de Janeiro')
+        this.getApi('São Paulo')
 
     }
 
@@ -28,7 +43,6 @@ class GetWeather {
         this.searchBtn.addEventListener('click', e => {
 
             this.getApi(this.inputCity.value)
-            this.clearSearch()
 
         })
 
@@ -37,7 +51,6 @@ class GetWeather {
             if (e.key === 'Enter') {
 
                 this.getApi(this.inputCity.value)
-                this.clearSearch()
 
             }
 
@@ -45,13 +58,12 @@ class GetWeather {
 
     }
 
-    getApi(city) {
+    getApi(city = 0) {
 
         // Weather API sample javascript code
         // Requires: jQuery and crypto-js (v3.1.9)
         // 
         // Copyright 2019 Oath Inc. Licensed under the terms of the zLib license see https://opensource.org/licenses/Zlib for terms.
-
         var self = this;
         var url = 'https://weather-ydn-yql.media.yahoo.com/forecastrss';
         var method = 'GET';
@@ -95,14 +107,21 @@ class GetWeather {
             },
             method: 'GET',
             success: function (data) {
-                self.showDetail(data);
+                if (self.inputCity.value.length == 0) {
+                    self.addCity(data)
+                } else {
+                    self.showDetail(data);
+                    self.clearSearch()
+                }
             }
 
         });
 
     }
 
+
     showDetail(data) {
+
         console.log(data)
 
         let parentDiv = document.querySelector('#topdiv')
@@ -131,7 +150,7 @@ class GetWeather {
             <ul class="list-temp pl">
 
                 <strong>
-                    <li class="list-item"><i class="fas fa-arrow-down"></i>16°<i class="fas fa-arrow-up"></i>25°
+                    <li class="list-item"><i class="fas fa-arrow-down"></i>${data.forecasts[0].low}°<i class="fas fa-arrow-up"></i>${data.forecasts[0].high}°
                     </li>
                 </strong>
                 <li class="list-item">Vento <span class="temp">${data.current_observation.wind.speed}km/h</span></li>
@@ -139,7 +158,7 @@ class GetWeather {
             </ul>
 
             <ul class="list-temp">
-                <li class="list-item">Sensação <span class="temp">19°</span></li>
+                <li class="list-item">Pôr do sol <span class="temp">${data.current_observation.astronomy.sunset}</span></li>
                 <li class="list-item">Humidade <span class="temp">${data.current_observation.atmosphere.humidity}%</span></li>
             </ul>
 
@@ -151,29 +170,29 @@ class GetWeather {
 
             <ul class="list-days">
 
-                <li class="item-days days">Terça</li>
-                <li class="item-days day-temp">18° 26°</li>
+                <li class="item-days days">${data.forecasts[1].day}</li>
+                <li class="item-days day-temp">${data.forecasts[1].low}° ${data.forecasts[1].high}°</li>
 
             </ul>
 
             <ul class="list-days">
 
-                <li class="item-days days">Quarta</li>
-                <li class="item-days day-temp">18° 28°</li>
+                <li class="item-days days">${data.forecasts[2].day}</li>
+                <li class="item-days day-temp">${data.forecasts[2].low}° ${data.forecasts[2].high}°</li>
 
             </ul>
 
             <ul class="list-days">
 
-                <li class="item-days days">Quinta</li>
-                <li class="item-days day-temp">19° 30°</li>
+                <li class="item-days days">${data.forecasts[3].day}</li>
+                <li class="item-days day-temp">${data.forecasts[3].low}° ${data.forecasts[3].high}°</li>
 
             </ul>
 
             <ul class="list-days">
 
-                <li class="item-days days">Sexta</li>
-                <li class="item-days day-temp">23° 35°</li>
+                <li class="item-days days">${data.forecasts[4].day}</li>
+                <li class="item-days day-temp">${data.forecasts[4].low}° ${data.forecasts[4].high}°</li>
 
             </ul>
 
@@ -198,39 +217,21 @@ class GetWeather {
 
     }
 
+    addCity(data) {
 
-    /*Aracaju
-    Belém
-    Belo Horizonte
-    Boa Vista
-    Brasília
-    Campo Grande
-    Cuiabá
-    Curitiba
-    Florianópolis
-    Fortaleza
-    Goiânia
-    João Pessoa
-    Macapá
-    Maceió
-    Manaus
-    Natal
-    Palmas
-    Porto Alegre
-    Porto Velho
-    Recife
-    Rio Branco
-    Rio de Janeiro
-    Salvador
-    São Luís
-    São Paulo
-    Teresina
-    Vitória
-    */
+        let cityTable = document.querySelector('#main-content')
+        let cityInfo = document.createElement('tr')
 
+        cityInfo.innerHTML =
+            `
+        <td class="td-temp">${data.forecasts[0].low}°</td>
+        <td class="td-temp">${data.forecasts[0].high}°</td>
+        <td class="td-temp">${data.location.city}</td>
+            `
 
+        cityTable.appendChild(cityInfo)
 
-
+    }
 
 }
 
